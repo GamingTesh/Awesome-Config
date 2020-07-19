@@ -4,7 +4,6 @@ local gears = require('gears')
 local beautiful     = require("beautiful")
 
 local lain = require("lain")
-local freedesktop = require("freedesktop")
 
 local apps = require('configuration.apps')
 local dpi = require("beautiful.xresources").apply_dpi
@@ -40,7 +39,7 @@ awful.util.taglist_buttons = awful.util.table.join(
 )
 
 --TASK LIST BUTTON SETUP
-
+--[[
 awful.util.tasklist_buttons = awful.util.table.join(
     awful.button({ }, 1, function (c)
         if c == client.focus then
@@ -76,7 +75,7 @@ awful.util.tasklist_buttons = awful.util.table.join(
     awful.button({ }, 4, function () awful.client.focus.byidx(1) end),
     awful.button({ }, 5, function () awful.client.focus.byidx(-1) end)
 )
-
+--]]
 lain.layout.termfair.nmaster           = 3
 lain.layout.termfair.ncol              = 1
 lain.layout.termfair.center.nmaster    = 3
@@ -86,23 +85,3 @@ lain.layout.cascade.tile.offset_y      = dpi(32)
 lain.layout.cascade.tile.extra_padding = dpi(5)
 lain.layout.cascade.tile.nmaster       = 5
 lain.layout.cascade.tile.ncol          = 2
-
--- MENU SETUP
-local myawesomemenu = {
-    { "hotkeys", function() return false, hotkeys_popup.show_help end },
-    { "manual", apps.default.terminal .. " -e man awesome" },
-    { "edit config", string.format("%s -e %s %s", apps.default.terminal, apps.default.editor, awesome.conffile) },
-    { "restart", awesome.restart },
-    { "quit", function() awesome.quit() end }
-}
-awful.util.mymainmenu = freedesktop.menu.build({
-    icon_size = beautiful.menu_height or dpi(16),
-    before = {
-        { "Awesome", myawesomemenu, beautiful.awesome_icon },
-        -- other triads can be put here
-    },
-    after = {
-        { "Open terminal", apps.default.terminal },
-        -- other triads can be put here
-    }
-})
